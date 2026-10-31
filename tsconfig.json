@@ -1,10 +1,20 @@
+
 {
   "compilerOptions": {
     "target": "ES2022",
     "module": "Node16",
     "moduleResolution": "Node16",
     "types": ["node"],
+    "strict": true,
     "noEmit": true
   },
-  "include": ["playwright.config.ts", "tests/**/*.ts"]
+  "include": [
+    "playwright.config.ts",
+    "tests/**/*.ts",
+    "tests-setup/**/*.ts",
+    "pages/**/*.ts",
+    "data/**/*.ts",
+    "fixtures/**/*.ts",
+    "utils/**/*.ts"
+  ]
 }

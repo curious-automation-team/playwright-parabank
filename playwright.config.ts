@@ -31,14 +31,39 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure'
+    video: 'retain-on-failure',
+    headless: false
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testDir: './tests-setup',
+      testMatch: '**/auth.setup.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: undefined
+      }
+    },
+    {
+      name: 'auth',
+      testDir: './tests',
+      testMatch: '**/auth/*.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: { cookies: [], origins: []}
+      }
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      testDir: './tests',
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json'
+      },
+      dependencies: ['setup'],
+      testIgnore: ['**/auth/*.spec.ts']
     },
 
     // {
